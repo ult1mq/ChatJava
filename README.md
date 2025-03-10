@@ -28,8 +28,8 @@
 
 ### 1️⃣ Клонирование репозитория
 ```sh
- git clone https://github.com/yourusername/chat-application.git
- cd chat-application
+ git clone https://github.com/ult1mq/ChatJava.git
+ cd ChatJava
 ```
 
 ### 2️⃣ Запуск приложения
