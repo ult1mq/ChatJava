@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.ult1mma.chatapplication.entities.User;
 import org.ult1mma.chatapplication.repositories.UserRepository;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
 
@@ -50,6 +51,16 @@ public class UserServiceTest {
         userService.registerUser("test", "password", "test@test.com");
 
         Mockito.verify(userRepository).save(any(User.class));
+    }
+
+    @Test
+    void testRegisterUser_Fail_UsernameAlreadyExists() {
+        Mockito.when(userRepository.findByUsername("test")).thenReturn(testUser);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser("test", "password", "test@test.com");
+        });
+        assertEquals("Username already exists", exception.getMessage());
+        Mockito.verify(userRepository, Mockito.never()).save(any(User.class));
     }
 
 
