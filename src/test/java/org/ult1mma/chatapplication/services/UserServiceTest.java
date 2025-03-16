@@ -14,6 +14,8 @@ import org.ult1mma.chatapplication.repositories.UserRepository;
 
 import java.time.LocalDateTime;
 
+import static org.mockito.ArgumentMatchers.any;
+
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
 
@@ -32,7 +34,7 @@ public class UserServiceTest {
     void setUp() {
         testUser = new User();
         testUser.setUsername("test");
-        testUser.setPassword("password");
+        testUser.setPassword("encodedPassword");
         testUser.setEmail("test@test.com");
         testUser.setCreatedAt(LocalDateTime.now());
         testUser.setActive(true);
@@ -41,7 +43,16 @@ public class UserServiceTest {
 
     @Test
     void testRegisterUser_Success() {
+        Mockito.when(userRepository.findByUsername("test")).thenReturn(null);
+        Mockito.when(userRepository.findByEmail("test@test.com")).thenReturn(null);
+        Mockito.when(passwordEncoder.encode("password")).thenReturn("encodedPassword");
 
+        userService.registerUser("test", "password", "test@test.com");
+
+        Mockito.verify(userRepository).save(any(User.class));
     }
+
+
+
 
 }
