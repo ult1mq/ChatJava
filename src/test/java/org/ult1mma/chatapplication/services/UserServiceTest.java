@@ -64,6 +64,20 @@ public class UserServiceTest {
     }
 
 
+    @Test
+    void testRegisterUser_Fail_EmailAlreadyExists() {
+        Mockito.when(userRepository.findByUsername("test")).thenReturn(null);
+        Mockito.when(userRepository.findByEmail("test@test.com")).thenReturn(testUser);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            userService.registerUser("test", "password", "test@test.com");
+        });
+        assertEquals("Email already exists", exception.getMessage());
+        Mockito.verify(userRepository, Mockito.never()).save(any(User.class));
+    }
+
+
+
+
 
 
 }
