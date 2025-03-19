@@ -101,12 +101,12 @@ public class UserServiceTest {
 
     @Test
     void testFindByUsername() {
-        Mockito.when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        Mockito.when(userRepository.findByUsername("test")).thenReturn(testUser);
 
-        User result = userService.findByUsername("testUser");
+        User result = userService.findByUsername("test");
 
         assertNotNull(result);
-        assertEquals("testUser", result.getUsername());
+        assertEquals("test", result.getUsername());
     }
 
 
