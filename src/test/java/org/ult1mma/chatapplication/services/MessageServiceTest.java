@@ -14,6 +14,7 @@ import org.ult1mma.chatapplication.repositories.MessageRepository;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -57,5 +58,18 @@ public class MessageServiceTest {
         assertEquals(receiver, sentMessage.getReceiver());
         Mockito.verify(messageRepository).save(Mockito.any(Message.class));
     }
+
+    @Test
+    void testGetMessagesBetweenUsers() {
+        Mockito.when(messageRepository.findBySenderAndReceiver(sender, receiver)).thenReturn(List.of(message));
+
+        List<Message> messages = messageService.getMessagesBetweenUsers(sender, receiver);
+
+        assertFalse(messages.isEmpty());
+        assertEquals(1, messages.size());
+        assertEquals("Hello, Bob!", messages.get(0).getContent());
+        Mockito.verify(messageRepository).findBySenderAndReceiver(sender, receiver);
+    }
+
 
 }
