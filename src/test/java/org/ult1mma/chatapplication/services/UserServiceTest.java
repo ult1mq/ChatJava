@@ -14,6 +14,7 @@ import org.ult1mma.chatapplication.repositories.UserRepository;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 
@@ -75,7 +76,31 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.never()).save(any(User.class));
     }
 
-    
+    @Test
+    void testLoginUser_Success() {
+        Mockito.when(userRepository.findByUsername("test")).thenReturn(testUser);
+        Mockito.when(passwordEncoder.matches("password", "encodedPassword")).thenReturn(true);
+
+        Optional<User> result = userService.loginUser("test", "password");
+
+        assertTrue(result.isPresent());
+        assertEquals("test", result.get().getUsername());
+        Mockito.verify(userRepository).save(any(User.class));
+    }
+
+    @Test
+    void testLoginUser_Fail_WrongPassword() {
+        Mockito.when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+        Mockito.when(passwordEncoder.matches("wrongPassword", "encodedPassword")).thenReturn(false);
+
+        Optional<User> result = userService.loginUser("testUser", "wrongPassword");
+
+        assertTrue(result.isEmpty());
+        Mockito.verify(userRepository, Mockito.never()).save(any(User.class));
+    }
+
+
+
 
 
 
