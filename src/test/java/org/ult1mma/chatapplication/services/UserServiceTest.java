@@ -99,6 +99,16 @@ public class UserServiceTest {
         Mockito.verify(userRepository, Mockito.never()).save(any(User.class));
     }
 
+    @Test
+    void testFindByUsername() {
+        Mockito.when(userRepository.findByUsername("testUser")).thenReturn(testUser);
+
+        User result = userService.findByUsername("testUser");
+
+        assertNotNull(result);
+        assertEquals("testUser", result.getUsername());
+    }
+
 
 
 
