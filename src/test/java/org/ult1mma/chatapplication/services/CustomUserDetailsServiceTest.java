@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.ult1mma.chatapplication.entities.User;
 import org.ult1mma.chatapplication.repositories.UserRepository;
 
@@ -43,5 +44,17 @@ public class CustomUserDetailsServiceTest {
         assertTrue(userDetails.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("USER")));
 
     }
+
+    @Test
+    void testLoadUserByUsername_Failure_UsernameNotFound() {
+        Mockito.when(userRepository.findByUsername(testUser.getUsername())).thenReturn(null);
+
+        Exception exception = assertThrows(UsernameNotFoundException.class, () -> {
+            customUserDetailsService.loadUserByUsername("unknownUser");
+        });
+        assertEquals("Username not found", exception.getMessage());
+    }
+
+
 
 }
