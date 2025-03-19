@@ -71,6 +71,18 @@ public class MessageServiceTest {
         Mockito.verify(messageRepository).findBySenderAndReceiver(sender, receiver);
     }
 
+    @Test
+    void testGetMessagesForUser() {
+        Mockito.when(messageRepository.findByReceiver(receiver)).thenReturn(List.of(message));
+
+        List<Message> messages = messageService.getMessagesForUser(receiver);
+
+        assertFalse(messages.isEmpty());
+        assertEquals(1, messages.size());
+        assertEquals("Hello, Bob!", messages.get(0).getContent());
+        Mockito.verify(messageRepository).findByReceiver(receiver);
+    }
+
 
 
 
