@@ -9,7 +9,7 @@
 - ✅ **Регистрация пользователей**
 - 🔐 **Аутентификация с использованием Spring Security**
 - ✉️ **Отправка и получение сообщений**
-- 🗄️ **Хранение пользователей и сообщений в базе данных H2**
+- 🗄️ **Хранение пользователей и сообщений в базе данных Postrgresql**
 - 🔑 **Хеширование паролей с использованием BCrypt**
 
 ---
@@ -18,7 +18,7 @@
 - **🖥 Spring Boot** – основа приложения
 - **🔐 Spring Security** – аутентификация и авторизация
 - **🗄 Spring Data JPA** – работа с базой данных
-- **💾 H2 Database** – встроенная база данных
+- **💾 Postgresql Database** – база данных Postgresql
 - **🌿 Thymeleaf** – шаблонизатор для фронтенда
 - **📦 Lombok** – упрощение работы с сущностями
 
@@ -58,15 +58,10 @@ http://localhost:8080
 
 ---
 
-## 🛠 Доступ к H2 Console
-H2 Console доступна по адресу:
-```
-http://localhost:8080/h2
-```
 **Параметры для входа:**
-- 🛠 **JDBC URL:** `jdbc:h2:mem:testchat`
-- 👤 **Username:** `sa`
-- 🔑 **Password:** `11111111`
+- 🛠 **JDBC URL:** `jdbc:postgresql://localhost:5432/&your_db`
+- 👤 **Username:** `&your_username`
+- 🔑 **Password:** `&your_password`
 
 ---
 
@@ -103,6 +98,5 @@ chat-application/
 
 ---
 
-## ✍️ Автор
-[Ваше Имя](https://github.com/yourusername)
+
 
